@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoshin <yoshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
 /*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "minirt.h"
 #include "mlx.h"
 
-int	main(int argc, char **argv)
-{
-	t_scene	scene;
+#define KEY_ESC 53
 
-	if (argc != 2)
-		exit_error("usage: ./miniRT <scene.rt>", NULL);
-	init_scene(&scene);
-	parse_file(argv[1], &scene);
-	init_window(&scene);
-	setup_hooks(&scene);
-	display_image(&scene);
-	mlx_loop(scene.mlx);
+int	handle_keypress(int keycode, t_scene *scene)
+{
+	if (keycode == KEY_ESC)
+	{
+		destroy_window(scene);
+		free_scene(scene);
+		exit(0);
+	}
 	return (0);
+}
+
+int	handle_close(t_scene *scene)
+{
+	destroy_window(scene);
+	free_scene(scene);
+	exit(0);
+	return (0);
+}
+
+void	setup_hooks(t_scene *scene)
+{
+	mlx_hook(scene->win, 2, 1L << 0, handle_keypress, scene);
+	mlx_hook(scene->win, 17, 0, handle_close, scene);
 }
