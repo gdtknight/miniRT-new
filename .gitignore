@@ -1,0 +1,17 @@
+# Objects and binaries
+*.o
+*.a
+miniRT
+
+# OS files
+.DS_Store
+*.dSYM/
+
+# Editor files
+*.swp
+*~
+.vscode/
+.idea/
+
+# miniLibX build artifacts
+minilibx/*.o
