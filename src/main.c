@@ -1,0 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yoshin <yoshin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
+/*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "parsing.h"
+
+int	main(int argc, char **argv)
+{
+	t_scene	scene;
+
+	if (argc != 2)
+		exit_error("usage: ./miniRT <scene.rt>", NULL);
+	init_scene(&scene);
+	parse_file(argv[1], &scene);
+	free_scene(&scene);
+	return (0);
+}
