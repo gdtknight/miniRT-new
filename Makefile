@@ -13,9 +13,11 @@
 NAME		= miniRT
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
-INCLUDES	= -I include -I libft/includes
+INCLUDES	= -I include -I libft/includes -I minilibx
 LIBFT		= libft/libft.a
-LIBS		= $(LIBFT) -lm
+MLX			= minilibx/libmlx.a
+MLX_FLAGS	= -framework OpenGL -framework AppKit
+LIBS		= $(LIBFT) $(MLX) $(MLX_FLAGS) -lm
 
 SRC			= src/main.c \
 			  src/vector/vec_basic.c \
@@ -28,17 +30,23 @@ SRC			= src/main.c \
 			  src/parsing/parse_scene.c \
 			  src/parsing/parse_objects.c \
 			  src/parsing/parse_file.c \
-			  src/parsing/validate.c
+			  src/parsing/validate.c \
+			  src/window/window.c \
+			  src/window/hooks.c \
+			  src/window/image.c
 
 OBJ			= $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT) $(MLX) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
 
 $(LIBFT):
 	make -C libft
+
+$(MLX):
+	make -C minilibx
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@

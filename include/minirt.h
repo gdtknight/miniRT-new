@@ -87,4 +87,21 @@ void	init_scene(t_scene *scene);
 void	free_scene(t_scene *scene);
 void	free_objects(t_object *objs);
 
+/* src/parsing/parse_error.c */
+void	exit_error(char *msg, t_scene *scene);
+
+/* src/window/window.c */
+void	init_window(t_scene *scene);
+void	destroy_window(t_scene *scene);
+
+/* src/window/hooks.c */
+int		handle_keypress(int keycode, t_scene *scene);
+int		handle_close(t_scene *scene);
+void	setup_hooks(t_scene *scene);
+
+/* src/window/image.c */
+void	img_pixel_put(t_img *img, int x, int y, int color);
+int		color_to_int(t_color3 c);
+void	display_image(t_scene *scene);
+
 #endif
