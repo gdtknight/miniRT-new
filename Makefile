@@ -21,7 +21,23 @@ LIBS        = $(LIBFT) $(MLX) $(MLX_FLAGS) -lm
 
 SRC         = src/main.c \
               src/vector/vec_basic.c \
-              src/vector/vec_ops.c
+              src/vector/vec_ops.c \
+              src/utils/ft_atof.c \
+              src/utils/get_next_line.c \
+              src/parsing/parse_error.c \
+              src/parsing/parse_utils.c \
+              src/parsing/parse_scene.c \
+              src/parsing/parse_objects.c \
+              src/parsing/parse_file.c \
+              src/parsing/validate.c \
+              src/scene/scene.c \
+              src/scene/camera.c \
+              src/window/window.c \
+              src/window/hooks.c \
+              src/window/image.c \
+              src/render/ray.c \
+              src/render/render.c \
+              src/objects/sphere.c
 
 OBJ         = $(SRC:.c=.o)
 

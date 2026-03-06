@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "mlx.h"
 
 #define KEY_ESC 53
 
@@ -19,7 +18,6 @@ int	handle_keypress(int keycode, t_scene *scene)
 {
 	if (keycode == KEY_ESC)
 	{
-		destroy_window(scene);
 		free_scene(scene);
 		exit(0);
 	}
@@ -28,7 +26,6 @@ int	handle_keypress(int keycode, t_scene *scene)
 
 int	handle_close(t_scene *scene)
 {
-	destroy_window(scene);
 	free_scene(scene);
 	exit(0);
 	return (0);

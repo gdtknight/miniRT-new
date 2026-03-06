@@ -16,9 +16,9 @@ t_hit	intersect_object(t_object *obj, t_ray ray)
 {
 	t_hit	hit;
 
-	(void)obj;
-	(void)ray;
 	hit.hit = 0;
+	if (obj->type == OBJ_SPHERE)
+		hit = intersect_sphere(&obj->data.sphere, ray);
 	return (hit);
 }
 

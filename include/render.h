@@ -44,4 +44,7 @@ t_color3	trace_ray(t_scene *scene, t_ray ray);
 t_hit		find_closest_hit(t_object *objs, t_ray ray);
 t_hit		intersect_object(t_object *obj, t_ray ray);
 
+/* src/objects/sphere.c */
+t_hit		intersect_sphere(t_sphere *sp, t_ray ray);
+
 #endif

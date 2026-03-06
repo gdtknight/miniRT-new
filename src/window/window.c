@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "mlx.h"
 
 void	init_window(t_scene *scene)
 {
