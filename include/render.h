@@ -27,6 +27,7 @@ typedef struct s_hit
 	t_point3	point;
 	t_vec3		normal;
 	t_color3	color;
+	t_vec3		view_dir;
 	int			hit;
 }	t_hit;
 
@@ -70,5 +71,16 @@ t_color3	color_clamp(t_color3 c);
 t_color3	compute_lighting(t_scene *scene, t_hit hit);
 t_color3	compute_diffuse(t_light *light, t_hit hit);
 int			is_in_shadow(t_scene *scene, t_hit hit);
+
+# ifdef BONUS
+/* src/render/specular_bonus.c */
+t_color3	compute_specular(t_light *light, t_hit hit, t_vec3 view_dir);
+/* src/render/checker_bonus.c */
+t_color3	apply_checkerboard(t_hit hit, t_color3 base_color);
+/* src/render/light_bonus.c */
+t_color3	compute_lighting_bonus(t_scene *scene, t_hit hit);
+/* src/objects/cone_bonus.c */
+t_hit		intersect_cone(t_cone *cone, t_ray ray);
+# endif
 
 #endif

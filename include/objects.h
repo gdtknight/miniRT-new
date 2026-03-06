@@ -15,13 +15,6 @@
 
 # include "vector.h"
 
-typedef enum e_obj_type
-{
-	OBJ_SPHERE,
-	OBJ_PLANE,
-	OBJ_CYLINDER
-}	t_obj_type;
-
 typedef struct s_sphere
 {
 	t_point3	center;
@@ -45,11 +38,30 @@ typedef struct s_cylinder
 	t_color3	color;
 }	t_cylinder;
 
+typedef struct s_cone
+{
+	t_point3	apex;
+	t_vec3		axis;
+	double		cos_theta;
+	double		radius;
+	double		height;
+	t_color3	color;
+}	t_cone;
+
+typedef enum e_obj_type
+{
+	OBJ_SPHERE,
+	OBJ_PLANE,
+	OBJ_CYLINDER,
+	OBJ_CONE
+}	t_obj_type;
+
 typedef union u_obj_data
 {
 	t_sphere	sphere;
 	t_plane		plane;
 	t_cylinder	cylinder;
+	t_cone		cone;
 }	t_obj_data;
 
 typedef struct s_object

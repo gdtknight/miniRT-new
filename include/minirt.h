@@ -49,9 +49,10 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	t_point3	pos;
-	double		brightness;
-	t_color3	color;
+	t_point3		pos;
+	double			brightness;
+	t_color3		color;
+	struct s_light	*next;
 }	t_light;
 
 typedef struct s_img
@@ -72,6 +73,7 @@ typedef struct s_scene
 	t_camera	camera;
 	t_light		light;
 	t_object	*objects;
+	t_light		*lights;
 	int			has_ambient;
 	int			has_camera;
 	int			has_light;
@@ -87,6 +89,10 @@ char	*get_next_line(int fd);
 void	init_scene(t_scene *scene);
 void	free_scene(t_scene *scene);
 void	free_objects(t_object *objs);
+# ifdef BONUS
+
+void	free_lights(t_light *lights);
+# endif
 
 /* src/parsing/parse_error.c */
 void	exit_error(char *msg, t_scene *scene);

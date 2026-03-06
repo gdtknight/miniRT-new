@@ -30,6 +30,7 @@ int			count_fields(char **fields);
 void		parse_ambient(char **fields, t_scene *scene);
 void		parse_camera(char **fields, t_scene *scene);
 void		parse_light(char **fields, t_scene *scene);
+void		replace_tabs(char *line);
 void		dispatch_line(char *line, t_scene *scene);
 
 /* parse_objects.c */
@@ -37,6 +38,11 @@ void		parse_sphere(char **fields, t_scene *scene);
 void		parse_plane(char **fields, t_scene *scene);
 void		parse_cylinder(char **fields, t_scene *scene);
 void		add_object(t_scene *scene, t_object *obj);
+# ifdef BONUS
+
+void		add_light(t_scene *scene, t_light *light);
+void		parse_cone(char **fields, t_scene *scene);
+# endif
 
 /* parse_file.c */
 void		parse_file(char *filename, t_scene *scene);

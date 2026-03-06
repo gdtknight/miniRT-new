@@ -12,6 +12,24 @@
 
 #include "parsing.h"
 
+#ifdef BONUS
+
+void	add_light(t_scene *scene, t_light *light)
+{
+	t_light		*cur;
+
+	if (!scene->lights)
+	{
+		scene->lights = light;
+		return ;
+	}
+	cur = scene->lights;
+	while (cur->next)
+		cur = cur->next;
+	cur->next = light;
+}
+#endif
+
 void	add_object(t_scene *scene, t_object *obj)
 {
 	t_object	*current;
