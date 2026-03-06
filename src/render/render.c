@@ -48,14 +48,11 @@ t_hit	find_closest_hit(t_object *objs, t_ray ray)
 t_color3	trace_ray(t_scene *scene, t_ray ray)
 {
 	t_hit	hit;
-	double	t;
 
 	hit = find_closest_hit(scene->objects, ray);
 	if (hit.hit)
-		return (hit.color);
-	t = 0.5 * (ray.dir.y + 1.0);
-	return (vec3_add(vec3_mul(vec3_new(1, 1, 1), 1.0 - t),
-			vec3_mul(vec3_new(0.5, 0.7, 1.0), t)));
+		return (compute_lighting(scene, hit));
+	return (vec3_new(0.0, 0.0, 0.0));
 }
 
 void	render_scene(t_scene *scene)
