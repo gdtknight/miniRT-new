@@ -14,22 +14,13 @@
 #include "parsing.h"
 #include "render.h"
 
-static int	check_args(int argc, char **argv)
-{
-	if (argc != 2)
-		return (0);
-	if (!is_valid_ext(argv[1]))
-		return (0);
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	t_scene	scene;
 
-	if (!check_args(argc, argv))
+	if (argc != 2)
 	{
-		ft_putstr_fd("Error\nUsage: ./miniRT <scene.rt>\n", 2);
+		ft_putstr_fd("Error\nusage: ./miniRT <scene.rt>\n", 2);
 		return (1);
 	}
 	init_scene(&scene);

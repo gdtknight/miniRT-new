@@ -31,6 +31,8 @@ void	destroy_window(t_scene *scene)
 {
 	if (scene->img.ptr)
 		mlx_destroy_image(scene->mlx, scene->img.ptr);
+	scene->img.ptr = NULL;
 	if (scene->win)
 		mlx_destroy_window(scene->mlx, scene->win);
+	scene->win = NULL;
 }

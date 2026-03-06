@@ -22,6 +22,8 @@ void	free_scene(t_scene *scene)
 	if (scene->lights)
 		free_lights(scene->lights);
 	scene->lights = NULL;
+	if (scene->mlx)
+		destroy_window(scene);
 }
 
 #endif

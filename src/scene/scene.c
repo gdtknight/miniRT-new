@@ -52,6 +52,8 @@ void	free_scene(t_scene *scene)
 	if (scene->objects)
 		free_objects(scene->objects);
 	scene->objects = NULL;
+	if (scene->mlx)
+		destroy_window(scene);
 }
 
 #endif
