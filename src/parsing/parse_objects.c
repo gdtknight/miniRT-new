@@ -6,29 +6,11 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
-/*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-#ifdef BONUS
-
-void	add_light(t_scene *scene, t_light *light)
-{
-	t_light		*cur;
-
-	if (!scene->lights)
-	{
-		scene->lights = light;
-		return ;
-	}
-	cur = scene->lights;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = light;
-}
-#endif
 
 void	add_object(t_scene *scene, t_object *obj)
 {

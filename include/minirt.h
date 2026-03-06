@@ -6,7 +6,7 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
-/*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,11 @@ char	*get_next_line(int fd);
 
 /* src/scene/scene.c */
 void	init_scene(t_scene *scene);
-void	free_scene(t_scene *scene);
 void	free_objects(t_object *objs);
-# ifdef BONUS
 
+/* src/scene/scene_cleanup.c | src/scene/scene_bonus.c */
+void	free_scene(t_scene *scene);
 void	free_lights(t_light *lights);
-# endif
 
 /* src/parsing/parse_error.c */
 void	exit_error(char *msg, t_scene *scene);

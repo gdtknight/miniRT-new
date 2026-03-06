@@ -6,13 +6,11 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
-/*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef BONUS
-
-# include "render.h"
+#include "render.h"
 
 static int	is_shadow_light(t_scene *scene, t_hit hit, t_light *light)
 {
@@ -78,5 +76,3 @@ t_color3	compute_lighting_bonus(t_scene *scene, t_hit hit)
 				compute_specular(scene->lights, hit, hit.view_dir));
 	return (color_clamp(result));
 }
-
-#endif

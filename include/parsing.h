@@ -6,7 +6,7 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
-/*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,21 @@ int			count_fields(char **fields);
 /* parse_scene.c */
 void		parse_ambient(char **fields, t_scene *scene);
 void		parse_camera(char **fields, t_scene *scene);
-void		parse_light(char **fields, t_scene *scene);
 void		replace_tabs(char *line);
+
+/* parse_dispatch.c | parse_light_bonus.c */
+void		parse_light(char **fields, t_scene *scene);
 void		dispatch_line(char *line, t_scene *scene);
 
 /* parse_objects.c */
+void		add_object(t_scene *scene, t_object *obj);
 void		parse_sphere(char **fields, t_scene *scene);
 void		parse_plane(char **fields, t_scene *scene);
 void		parse_cylinder(char **fields, t_scene *scene);
-void		add_object(t_scene *scene, t_object *obj);
-# ifdef BONUS
 
+/* parse_light_bonus.c | parse_cone_bonus.c */
 void		add_light(t_scene *scene, t_light *light);
 void		parse_cone(char **fields, t_scene *scene);
-# endif
 
 /* parse_file.c */
 void		parse_file(char *filename, t_scene *scene);
