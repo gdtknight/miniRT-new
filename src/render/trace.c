@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trace_bonus.c                                      :+:      :+:    :+:   */
+/*   trace.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
+/*   Created: 2026/03/07 00:00:00 by yoshin            #+#    #+#             */
 /*   Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -23,8 +23,6 @@ t_hit	intersect_object(t_object *obj, t_ray ray)
 		hit = intersect_plane(&obj->data.plane, ray);
 	else if (obj->type == OBJ_CYLINDER)
 		hit = intersect_cylinder(&obj->data.cylinder, ray);
-	else if (obj->type == OBJ_CONE)
-		hit = intersect_cone(&obj->data.cone, ray);
 	return (hit);
 }
 
@@ -36,6 +34,5 @@ t_color3	trace_ray(t_scene *scene, t_ray ray)
 	if (!hit.hit)
 		return (vec3_new(0.0, 0.0, 0.0));
 	hit.view_dir = vec3_negate(ray.dir);
-	hit.color = apply_checkerboard(hit, hit.color);
-	return (compute_lighting_bonus(scene, hit));
+	return (compute_lighting(scene, hit));
 }

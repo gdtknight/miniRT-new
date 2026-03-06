@@ -6,7 +6,7 @@
 #    By: yoshin <yoshin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#              #
-#    Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr        #
+#    Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,16 +27,19 @@ SRC         = src/main.c \
               src/parsing/parse_error.c \
               src/parsing/parse_utils.c \
               src/parsing/parse_scene.c \
+              src/parsing/parse_dispatch.c \
               src/parsing/parse_objects.c \
               src/parsing/parse_file.c \
               src/parsing/validate.c \
               src/scene/scene.c \
+              src/scene/scene_cleanup.c \
               src/scene/camera.c \
               src/window/window.c \
               src/window/hooks.c \
               src/window/image.c \
               src/render/ray.c \
               src/render/render.c \
+              src/render/trace.c \
               src/render/color.c \
               src/render/light.c \
               src/objects/sphere.c \
@@ -63,7 +66,7 @@ $(MLX):
 clean:
 	$(MAKE) -C libft clean
 	$(MAKE) -C minilibx clean
-	rm -f $(OBJ) $(BONUS_MAIN_OBJ) $(BONUS_OBJ)
+	rm -f $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	$(MAKE) -C libft fclean
@@ -82,20 +85,19 @@ BONUS_SRC   = src/render/specular_bonus.c \
 
 BONUS_OBJ   = $(BONUS_SRC:.c=.o)
 
-BONUS_MAIN_OBJ = $(SRC:.c=.bonus.o)
+BONUS_EXCLUDE = src/render/trace.c \
+                src/parsing/parse_dispatch.c \
+                src/scene/scene_cleanup.c
 
-$(BONUS_OBJ): %.o: %.c
-	$(CC) $(CFLAGS) -D BONUS=1 $(INCLUDES) -c $< -o $@
-
-%.bonus.o: %.c
-	$(CC) $(CFLAGS) -D BONUS=1 $(INCLUDES) -c $< -o $@
+BONUS_MAIN_SRC = $(filter-out $(BONUS_EXCLUDE), $(SRC))
+BONUS_MAIN_OBJ = $(BONUS_MAIN_SRC:.c=.o)
 
 BONUS_STAMP = .bonus_built
 
 bonus: $(BONUS_STAMP)
 
 $(BONUS_STAMP): $(LIBFT) $(MLX) $(BONUS_MAIN_OBJ) $(BONUS_OBJ)
-	$(CC) $(CFLAGS) -D BONUS=1 $(BONUS_MAIN_OBJ) $(BONUS_OBJ) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(BONUS_MAIN_OBJ) $(BONUS_OBJ) $(LIBS) -o $(NAME)
 	@touch $(BONUS_STAMP)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
