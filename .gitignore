@@ -15,3 +15,9 @@ miniRT
 
 # miniLibX build artifacts
 minilibx/*.o
+
+# Agent queue (never commit)
+.queue/
+
+# Scripts (internal tooling)
+scripts/
