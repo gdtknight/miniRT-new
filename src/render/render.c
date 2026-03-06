@@ -6,28 +6,11 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
-/*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
-
-#ifndef BONUS
-
-t_hit	intersect_object(t_object *obj, t_ray ray)
-{
-	t_hit	hit;
-
-	hit.hit = 0;
-	if (obj->type == OBJ_SPHERE)
-		hit = intersect_sphere(&obj->data.sphere, ray);
-	else if (obj->type == OBJ_PLANE)
-		hit = intersect_plane(&obj->data.plane, ray);
-	else if (obj->type == OBJ_CYLINDER)
-		hit = intersect_cylinder(&obj->data.cylinder, ray);
-	return (hit);
-}
-#endif
 
 t_hit	find_closest_hit(t_object *objs, t_ray ray)
 {
@@ -47,20 +30,6 @@ t_hit	find_closest_hit(t_object *objs, t_ray ray)
 	}
 	return (closest);
 }
-
-#ifndef BONUS
-
-t_color3	trace_ray(t_scene *scene, t_ray ray)
-{
-	t_hit	hit;
-
-	hit = find_closest_hit(scene->objects, ray);
-	if (!hit.hit)
-		return (vec3_new(0.0, 0.0, 0.0));
-	hit.view_dir = vec3_negate(ray.dir);
-	return (compute_lighting(scene, hit));
-}
-#endif
 
 void	render_scene(t_scene *scene)
 {
