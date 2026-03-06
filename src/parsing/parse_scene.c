@@ -75,7 +75,7 @@ void	dispatch_line(char *line, t_scene *scene)
 
 	replace_tabs(line);
 	fields = ft_split(line, ' ');
-	if (!fields || !fields[0])
+	if (!fields || !fields[0] || fields[0][0] == '#')
 	{
 		free_split(fields);
 		return ;

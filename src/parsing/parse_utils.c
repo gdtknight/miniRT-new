@@ -44,9 +44,9 @@ t_color3	parse_color(char *str, t_scene *scene)
 		free_split(tokens);
 		exit_error("invalid color format", scene);
 	}
-	r = ft_atoi(tokens[0]);
-	g = ft_atoi(tokens[1]);
-	b = ft_atoi(tokens[2]);
+	r = (int)parse_double(tokens[0], scene);
+	g = (int)parse_double(tokens[1], scene);
+	b = (int)parse_double(tokens[2], scene);
 	free_split(tokens);
 	if (!validate_range_i(r, 0, 255)
 		|| !validate_range_i(g, 0, 255)
