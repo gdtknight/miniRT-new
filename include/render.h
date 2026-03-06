@@ -59,4 +59,16 @@ t_hit		intersect_cy_caps(t_cylinder *cy, t_ray ray);
 t_hit		check_cy_cap(t_cylinder *cy, t_ray ray,
 				t_point3 cap_center, t_vec3 cap_normal);
 
+/* src/render/color.c */
+t_color3	color_new(double r, double g, double b);
+t_color3	color_add(t_color3 a, t_color3 b);
+t_color3	color_mul(t_color3 c, double t);
+t_color3	color_hadamard(t_color3 a, t_color3 b);
+t_color3	color_clamp(t_color3 c);
+
+/* src/render/light.c */
+t_color3	compute_lighting(t_scene *scene, t_hit hit);
+t_color3	compute_diffuse(t_light *light, t_hit hit);
+int			is_in_shadow(t_scene *scene, t_hit hit);
+
 #endif
