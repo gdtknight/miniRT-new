@@ -305,12 +305,86 @@ Phase 8: Bonus (optional)
   Deploy Agent -> PR feature/bonus -> dev -> main, tag v1.1
 ```
 
-### Communication Protocol
+### Communication Protocol (Automated via File Queue)
 
-- **Code Agent** notifies Test Agent when a feature is ready for testing
-- **Test Agent** reports pass/fail with specific details back to Code Agent
-- **Deploy Agent** only merges after Test Agent gives approval
-- **PM** resolves conflicts between agents and adjusts priorities
+Agents communicate through a file-based message queue at `.queue/`.
+
+```
+.queue/
+├── pm/inbox/       # PM reads: status reports, test results, deploy reports
+├── code/inbox/     # Code Agent reads: task assignments, fix requests
+├── test/inbox/     # Test Agent reads: review requests
+├── deploy/inbox/   # Deploy Agent reads: merge approvals
+├── */done/         # Processed tasks (moved here after completion)
+├── logs/           # claude -p execution logs
+└── locks/          # Active processing indicators
+```
+
+#### Message Flow
+```
+PM ──task──> code/inbox/
+                │
+          (implements)
+                │
+                └──review──> test/inbox/
+                                 │
+                           (tests & validates)
+                                 │
+                    ┌─(pass)─────┴─────(fail)─┐
+                    │                          │
+             deploy/inbox/              code/inbox/
+              (merge/tag)              (fix request)
+                    │                          │
+              pm/inbox/                  pm/inbox/
+            (deploy report)           (error report)
+```
+
+#### Running the Orchestrator
+
+```bash
+# Install fswatch (one-time)
+brew install fswatch
+
+# Start the orchestrator (watches queues, auto-dispatches to claude -p)
+./scripts/orchestrator.sh
+
+# Options:
+./scripts/orchestrator.sh --model opus    # Use opus model
+./scripts/orchestrator.sh --budget 2.00   # $2 max per task
+./scripts/orchestrator.sh --yolo          # Skip all permission prompts
+./scripts/orchestrator.sh --dry-run       # Preview without executing
+```
+
+#### Dispatching Tasks
+
+```bash
+# Send a single task to an agent
+./scripts/send_task.sh code p1-vectors "Implement vector math per PROJECT_PLAN.md"
+./scripts/send_task.sh test p1-review "Run norminette and compile check"
+
+# Dispatch an entire phase (sends all tasks for that phase)
+./scripts/dispatch_phase.sh 1    # Foundation
+./scripts/dispatch_phase.sh 2    # Parsing
+# ... up to phase 8
+
+# Check status
+./scripts/status.sh
+```
+
+#### Task File Format
+```markdown
+# Task: <task-id>
+**Agent**: code|test|deploy
+**Created**: 2026-03-06 12:00:00
+**From**: PM
+---
+<task description>
+```
+
+#### Agent Output Protocol
+- **Code Agent** -> writes `<task-id>_review.md` to `test/inbox/` + `<task-id>_done.md` to `pm/inbox/`
+- **Test Agent** -> writes `<task-id>_test_result.md` to `pm/inbox/` + either `<task-id>_approved.md` to `deploy/inbox/` or `<task-id>_fixes.md` to `code/inbox/`
+- **Deploy Agent** -> writes `<task-id>_deployed.md` to `pm/inbox/`
 
 ### Definition of Done (per feature)
 
