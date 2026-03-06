@@ -37,6 +37,8 @@ SRC         = src/main.c \
               src/window/image.c \
               src/render/ray.c \
               src/render/render.c \
+              src/render/color.c \
+              src/render/light.c \
               src/objects/sphere.c \
               src/objects/plane.c \
               src/objects/cylinder.c \
