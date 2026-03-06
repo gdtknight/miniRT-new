@@ -21,3 +21,6 @@ minilibx/*.o
 
 # Scripts (internal tooling)
 scripts/
+
+# Bonus build stamp
+.bonus_built
