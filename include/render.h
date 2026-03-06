@@ -72,7 +72,6 @@ t_color3	compute_lighting(t_scene *scene, t_hit hit);
 t_color3	compute_diffuse(t_light *light, t_hit hit);
 int			is_in_shadow(t_scene *scene, t_hit hit);
 
-# ifdef BONUS
 /* src/render/specular_bonus.c */
 t_color3	compute_specular(t_light *light, t_hit hit, t_vec3 view_dir);
 /* src/render/checker_bonus.c */
@@ -81,6 +80,5 @@ t_color3	apply_checkerboard(t_hit hit, t_color3 base_color);
 t_color3	compute_lighting_bonus(t_scene *scene, t_hit hit);
 /* src/objects/cone_bonus.c */
 t_hit		intersect_cone(t_cone *cone, t_ray ray);
-# endif
 
 #endif
