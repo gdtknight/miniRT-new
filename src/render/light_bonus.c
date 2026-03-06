@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
+/*   light_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
+#ifdef BONUS
 
-int	is_in_shadow(t_scene *scene, t_hit hit)
+# include "render.h"
+
+static int	is_shadow_light(t_scene *scene, t_hit hit, t_light *light)
 {
 	t_vec3		light_dir;
 	double		light_dist;
@@ -20,7 +22,7 @@ int	is_in_shadow(t_scene *scene, t_hit hit)
 	t_ray		shadow_ray;
 	t_hit		shadow_hit;
 
-	light_dir = vec3_sub(scene->light.pos, hit.point);
+	light_dir = vec3_sub(light->pos, hit.point);
 	light_dist = vec3_length(light_dir);
 	light_dir = vec3_normalize(light_dir);
 	shadow_origin = vec3_add(hit.point, vec3_mul(hit.normal, EPSILON));
@@ -32,27 +34,49 @@ int	is_in_shadow(t_scene *scene, t_hit hit)
 	return (0);
 }
 
-t_color3	compute_diffuse(t_light *light, t_hit hit)
+static t_color3	diffuse_colored(t_light *light, t_hit hit)
 {
-	t_vec3	light_dir;
-	double	cos_angle;
+	t_vec3		light_dir;
+	t_color3	diffuse;
+	double		cos_angle;
 
 	light_dir = vec3_normalize(vec3_sub(light->pos, hit.point));
 	cos_angle = vec3_dot(hit.normal, light_dir);
 	if (cos_angle < 0.0)
 		cos_angle = 0.0;
-	return (color_mul(hit.color, cos_angle * light->brightness));
+	diffuse = color_mul(hit.color, cos_angle * light->brightness);
+	diffuse = color_hadamard(diffuse, light->color);
+	return (diffuse);
 }
 
-t_color3	compute_lighting(t_scene *scene, t_hit hit)
+static t_color3	sum_lights(t_scene *scene, t_hit hit)
+{
+	t_color3	sum;
+	t_light		*cur;
+
+	sum = color_new(0.0, 0.0, 0.0);
+	cur = scene->lights;
+	while (cur)
+	{
+		if (!is_shadow_light(scene, hit, cur))
+			sum = color_add(sum, diffuse_colored(cur, hit));
+		cur = cur->next;
+	}
+	return (sum);
+}
+
+t_color3	compute_lighting_bonus(t_scene *scene, t_hit hit)
 {
 	t_color3	ambient;
 	t_color3	result;
 
 	ambient = color_mul(hit.color, scene->ambient.ratio);
 	ambient = color_hadamard(ambient, scene->ambient.color);
-	if (is_in_shadow(scene, hit))
-		return (ambient);
-	result = color_add(ambient, compute_diffuse(&scene->light, hit));
+	result = color_add(ambient, sum_lights(scene, hit));
+	if (scene->lights)
+		result = color_add(result,
+				compute_specular(scene->lights, hit, hit.view_dir));
 	return (color_clamp(result));
 }
+
+#endif

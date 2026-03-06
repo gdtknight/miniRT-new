@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.c                                            :+:      :+:    :+:   */
+/*   trace_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,48 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-
-void	init_scene(t_scene *scene)
-{
-	ft_bzero(scene, sizeof(t_scene));
-}
-
-void	free_objects(t_object *objs)
-{
-	t_object	*tmp;
-
-	while (objs)
-	{
-		tmp = objs;
-		objs = objs->next;
-		free(tmp);
-	}
-}
-
 #ifdef BONUS
 
-void	free_lights(t_light *lights)
-{
-	t_light		*tmp;
+# include "render.h"
 
-	while (lights)
-	{
-		tmp = lights;
-		lights = lights->next;
-		free(tmp);
-	}
+t_hit	intersect_object(t_object *obj, t_ray ray)
+{
+	t_hit	hit;
+
+	hit.hit = 0;
+	if (obj->type == OBJ_SPHERE)
+		hit = intersect_sphere(&obj->data.sphere, ray);
+	else if (obj->type == OBJ_PLANE)
+		hit = intersect_plane(&obj->data.plane, ray);
+	else if (obj->type == OBJ_CYLINDER)
+		hit = intersect_cylinder(&obj->data.cylinder, ray);
+	else if (obj->type == OBJ_CONE)
+		hit = intersect_cone(&obj->data.cone, ray);
+	return (hit);
 }
 
-#endif
-
-#ifndef BONUS
-
-void	free_scene(t_scene *scene)
+t_color3	trace_ray(t_scene *scene, t_ray ray)
 {
-	if (scene->objects)
-		free_objects(scene->objects);
-	scene->objects = NULL;
+	t_hit	hit;
+
+	hit = find_closest_hit(scene->objects, ray);
+	if (!hit.hit)
+		return (vec3_new(0.0, 0.0, 0.0));
+	hit.view_dir = vec3_negate(ray.dir);
+	hit.color = apply_checkerboard(hit, hit.color);
+	return (compute_lighting_bonus(scene, hit));
 }
 
 #endif

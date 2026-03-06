@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.c                                            :+:      :+:    :+:   */
+/*   checker_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,48 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "render.h"
 
-void	init_scene(t_scene *scene)
+t_color3	apply_checkerboard(t_hit hit, t_color3 base_color)
 {
-	ft_bzero(scene, sizeof(t_scene));
+	int	ix;
+	int	iy;
+	int	iz;
+	int	sum;
+
+	ix = (int)floor(hit.point.x);
+	iy = (int)floor(hit.point.y);
+	iz = (int)floor(hit.point.z);
+	sum = ix + iy + iz;
+	if (((sum % 2) + 2) % 2 == 0)
+		return (base_color);
+	return (color_new(1.0 - base_color.x, 1.0 - base_color.y,
+			1.0 - base_color.z));
 }
-
-void	free_objects(t_object *objs)
-{
-	t_object	*tmp;
-
-	while (objs)
-	{
-		tmp = objs;
-		objs = objs->next;
-		free(tmp);
-	}
-}
-
-#ifdef BONUS
-
-void	free_lights(t_light *lights)
-{
-	t_light		*tmp;
-
-	while (lights)
-	{
-		tmp = lights;
-		lights = lights->next;
-		free(tmp);
-	}
-}
-
-#endif
-
-#ifndef BONUS
-
-void	free_scene(t_scene *scene)
-{
-	if (scene->objects)
-		free_objects(scene->objects);
-	scene->objects = NULL;
-}
-
-#endif
