@@ -10,20 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "mlx.h"
-
-int	main(int argc, char **argv)
+int	main(void)
 {
-	t_scene	scene;
-
-	if (argc != 2)
-		exit_error("usage: ./miniRT <scene.rt>", NULL);
-	init_scene(&scene);
-	parse_file(argv[1], &scene);
-	init_window(&scene);
-	setup_hooks(&scene);
-	display_image(&scene);
-	mlx_loop(scene.mlx);
 	return (0);
 }
