@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoshin <yoshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
 /*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-#include "parsing.h"
 #include "render.h"
 
-static int	check_args(int argc, char **argv)
+static t_vec3	get_world_up(t_vec3 dir)
 {
-	if (argc != 2)
-		return (0);
-	if (!is_valid_ext(argv[1]))
-		return (0);
-	return (1);
+	t_vec3	world_up;
+
+	world_up = vec3_new(0, 1, 0);
+	if (fabs(vec3_dot(dir, world_up)) > 0.999)
+		world_up = vec3_new(0, 0, 1);
+	return (world_up);
 }
 
-int	main(int argc, char **argv)
+void	init_camera(t_camera *cam)
 {
-	t_scene	scene;
+	t_vec3	world_up;
+	double	aspect_ratio;
+	double	fov_rad;
 
-	if (!check_args(argc, argv))
-	{
-		ft_putstr_fd("Error\nUsage: ./miniRT <scene.rt>\n", 2);
-		return (1);
-	}
-	init_scene(&scene);
-	parse_file(argv[1], &scene);
-	init_window(&scene);
-	render_scene(&scene);
-	setup_hooks(&scene);
-	mlx_loop(scene.mlx);
-	return (0);
+	world_up = get_world_up(cam->dir);
+	cam->right = vec3_normalize(vec3_cross(world_up, cam->dir));
+	cam->up = vec3_cross(cam->dir, cam->right);
+	aspect_ratio = (double)WIN_W / (double)WIN_H;
+	fov_rad = cam->fov * M_PI / 180.0;
+	cam->vp_width = 2.0 * tan(fov_rad / 2.0);
+	cam->vp_height = cam->vp_width / aspect_ratio;
 }

@@ -1,9 +1,9 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoshin <yoshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/06 00:00:00 by yoshin            #+#    #+#             */
 /*   Updated: 2026/03/06 00:00:00 by yoshin           ###   ########.fr       */
@@ -11,32 +11,28 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "parsing.h"
-#include "render.h"
 
-static int	check_args(int argc, char **argv)
+#define KEY_ESC 53
+
+int	handle_keypress(int keycode, t_scene *scene)
 {
-	if (argc != 2)
-		return (0);
-	if (!is_valid_ext(argv[1]))
-		return (0);
-	return (1);
+	if (keycode == KEY_ESC)
+	{
+		free_scene(scene);
+		exit(0);
+	}
+	return (0);
 }
 
-int	main(int argc, char **argv)
+int	handle_close(t_scene *scene)
 {
-	t_scene	scene;
-
-	if (!check_args(argc, argv))
-	{
-		ft_putstr_fd("Error\nUsage: ./miniRT <scene.rt>\n", 2);
-		return (1);
-	}
-	init_scene(&scene);
-	parse_file(argv[1], &scene);
-	init_window(&scene);
-	render_scene(&scene);
-	setup_hooks(&scene);
-	mlx_loop(scene.mlx);
+	free_scene(scene);
+	exit(0);
 	return (0);
+}
+
+void	setup_hooks(t_scene *scene)
+{
+	mlx_hook(scene->win, 2, 1L << 0, handle_keypress, scene);
+	mlx_hook(scene->win, 17, 0, handle_close, scene);
 }
