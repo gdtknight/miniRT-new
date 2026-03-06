@@ -19,6 +19,10 @@ t_hit	intersect_object(t_object *obj, t_ray ray)
 	hit.hit = 0;
 	if (obj->type == OBJ_SPHERE)
 		hit = intersect_sphere(&obj->data.sphere, ray);
+	else if (obj->type == OBJ_PLANE)
+		hit = intersect_plane(&obj->data.plane, ray);
+	else if (obj->type == OBJ_CYLINDER)
+		hit = intersect_cylinder(&obj->data.cylinder, ray);
 	return (hit);
 }
 

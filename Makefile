@@ -37,7 +37,10 @@ SRC         = src/main.c \
               src/window/image.c \
               src/render/ray.c \
               src/render/render.c \
-              src/objects/sphere.c
+              src/objects/sphere.c \
+              src/objects/plane.c \
+              src/objects/cylinder.c \
+              src/objects/cylinder_caps.c
 
 OBJ         = $(SRC:.c=.o)
 
