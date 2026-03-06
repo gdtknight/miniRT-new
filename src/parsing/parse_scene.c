@@ -39,6 +39,8 @@ void	parse_camera(char **fields, t_scene *scene)
 	scene->has_camera = 1;
 }
 
+#ifndef BONUS
+
 void	parse_light(char **fields, t_scene *scene)
 {
 	if (count_fields(fields) != 4)
@@ -53,7 +55,9 @@ void	parse_light(char **fields, t_scene *scene)
 	scene->has_light = 1;
 }
 
-static void	replace_tabs(char *line)
+#endif
+
+void	replace_tabs(char *line)
 {
 	while (*line)
 	{
@@ -62,6 +66,8 @@ static void	replace_tabs(char *line)
 		line++;
 	}
 }
+
+#ifndef BONUS
 
 void	dispatch_line(char *line, t_scene *scene)
 {
@@ -90,3 +96,5 @@ void	dispatch_line(char *line, t_scene *scene)
 		exit_error("unknown element type", scene);
 	free_split(fields);
 }
+
+#endif

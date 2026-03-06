@@ -63,14 +63,39 @@ $(MLX):
 clean:
 	$(MAKE) -C libft clean
 	$(MAKE) -C minilibx clean
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(BONUS_MAIN_OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	$(MAKE) -C libft fclean
-	rm -f $(NAME)
+	rm -f $(NAME) $(BONUS_STAMP)
 
 re: fclean all
 
-bonus:
+BONUS_SRC   = src/render/specular_bonus.c \
+              src/render/checker_bonus.c \
+              src/render/light_bonus.c \
+              src/render/trace_bonus.c \
+              src/objects/cone_bonus.c \
+              src/parsing/parse_cone_bonus.c \
+              src/parsing/parse_light_bonus.c \
+              src/scene/scene_bonus.c
 
-.PHONY: all clean fclean re bonus
+BONUS_OBJ   = $(BONUS_SRC:.c=.o)
+
+BONUS_MAIN_OBJ = $(SRC:.c=.bonus.o)
+
+$(BONUS_OBJ): %.o: %.c
+	$(CC) $(CFLAGS) -D BONUS=1 $(INCLUDES) -c $< -o $@
+
+%.bonus.o: %.c
+	$(CC) $(CFLAGS) -D BONUS=1 $(INCLUDES) -c $< -o $@
+
+BONUS_STAMP = .bonus_built
+
+bonus: $(BONUS_STAMP)
+
+$(BONUS_STAMP): $(LIBFT) $(MLX) $(BONUS_MAIN_OBJ) $(BONUS_OBJ)
+	$(CC) $(CFLAGS) -D BONUS=1 $(BONUS_MAIN_OBJ) $(BONUS_OBJ) $(LIBS) -o $(NAME)
+	@touch $(BONUS_STAMP)
+
+.PHONY: all clean fclean re

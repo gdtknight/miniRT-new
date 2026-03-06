@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.c                                            :+:      :+:    :+:   */
+/*   scene_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,48 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-
-void	init_scene(t_scene *scene)
-{
-	ft_bzero(scene, sizeof(t_scene));
-}
-
-void	free_objects(t_object *objs)
-{
-	t_object	*tmp;
-
-	while (objs)
-	{
-		tmp = objs;
-		objs = objs->next;
-		free(tmp);
-	}
-}
-
 #ifdef BONUS
 
-void	free_lights(t_light *lights)
-{
-	t_light		*tmp;
-
-	while (lights)
-	{
-		tmp = lights;
-		lights = lights->next;
-		free(tmp);
-	}
-}
-
-#endif
-
-#ifndef BONUS
+# include "minirt.h"
 
 void	free_scene(t_scene *scene)
 {
 	if (scene->objects)
 		free_objects(scene->objects);
 	scene->objects = NULL;
+	if (scene->lights)
+		free_lights(scene->lights);
+	scene->lights = NULL;
 }
 
 #endif
