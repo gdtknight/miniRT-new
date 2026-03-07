@@ -54,5 +54,6 @@ int			validate_range_d(double val, double min, double max);
 int			validate_range_i(int val, int min, int max);
 int			is_valid_number(char *str);
 void		free_split(char **split);
+int			parse_checker_opt(char **fields, int base, t_scene *scene);
 
 #endif

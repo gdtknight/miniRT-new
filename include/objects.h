@@ -68,6 +68,7 @@ typedef struct s_object
 {
 	t_obj_type		type;
 	t_obj_data		data;
+	int				checker;
 	struct s_object	*next;
 }	t_object;
 
