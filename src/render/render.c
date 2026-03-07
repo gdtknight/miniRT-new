@@ -17,15 +17,22 @@ t_hit	find_closest_hit(t_object *objs, t_ray ray)
 	t_hit		closest;
 	t_hit		hit;
 	t_object	*current;
+	int			idx;
 
 	closest.hit = 0;
 	closest.t = 1e30;
+	closest.obj_idx = -1;
 	current = objs;
+	idx = 0;
 	while (current)
 	{
 		hit = intersect_object(current, ray);
 		if (hit.hit && hit.t > EPSILON && hit.t < closest.t)
+		{
 			closest = hit;
+			closest.obj_idx = idx;
+		}
+		idx++;
 		current = current->next;
 	}
 	return (closest);

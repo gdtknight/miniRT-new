@@ -30,12 +30,17 @@ t_hit	intersect_object(t_object *obj, t_ray ray)
 
 t_color3	trace_ray(t_scene *scene, t_ray ray)
 {
-	t_hit	hit;
+	t_hit		hit;
+	t_color3	color;
 
 	hit = find_closest_hit(scene->objects, ray);
 	if (!hit.hit)
 		return (vec3_new(0.0, 0.0, 0.0));
 	hit.view_dir = vec3_negate(ray.dir);
 	hit.color = apply_checkerboard(hit, hit.color);
-	return (compute_lighting_bonus(scene, hit));
+	color = compute_lighting_bonus(scene, hit);
+	if (scene->mode == MODE_OBJECT
+		&& hit.obj_idx == scene->selected_idx)
+		color = color_mul(color, 1.2);
+	return (color_clamp(color));
 }
