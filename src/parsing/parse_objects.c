@@ -16,6 +16,7 @@ void	add_object(t_scene *scene, t_object *obj)
 {
 	t_object	*current;
 
+	scene->obj_count++;
 	if (!scene->objects)
 	{
 		scene->objects = obj;
