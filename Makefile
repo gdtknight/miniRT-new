@@ -78,14 +78,23 @@ BONUS_SRC   = src/render/specular_bonus.c \
               src/render/checker_bonus.c \
               src/render/light_bonus.c \
               src/render/trace_bonus.c \
+              src/render/render_bonus.c \
               src/objects/cone_bonus.c \
               src/parsing/parse_cone_bonus.c \
               src/parsing/parse_light_bonus.c \
-              src/scene/scene_bonus.c
+              src/scene/scene_bonus.c \
+              src/window/hooks_bonus.c \
+              src/window/hooks_key_bonus.c \
+              src/window/move_bonus.c \
+              src/window/rotate_bonus.c \
+              src/window/transform_bonus.c \
+              src/window/hud_bonus.c
 
 BONUS_OBJ   = $(BONUS_SRC:.c=.o)
 
 BONUS_EXCLUDE = src/render/trace.c \
+                src/render/render.c \
+                src/window/hooks.c \
                 src/parsing/parse_dispatch.c \
                 src/scene/scene_cleanup.c
 
