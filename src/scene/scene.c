@@ -15,6 +15,24 @@
 void	init_scene(t_scene *scene)
 {
 	ft_bzero(scene, sizeof(t_scene));
+	scene->mode = MODE_CAMERA;
+	scene->selected_idx = 0;
+	scene->obj_count = 0;
+}
+
+t_object	*get_object_by_idx(t_object *objs, int idx)
+{
+	int	i;
+
+	if (idx < 0)
+		return (NULL);
+	i = 0;
+	while (objs && i < idx)
+	{
+		objs = objs->next;
+		i++;
+	}
+	return (objs);
 }
 
 void	free_objects(t_object *objs)
