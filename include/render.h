@@ -29,6 +29,7 @@ typedef struct s_hit
 	t_color3	color;
 	t_vec3		view_dir;
 	int			hit;
+	int			obj_idx;
 }	t_hit;
 
 /* src/scene/camera.c */
