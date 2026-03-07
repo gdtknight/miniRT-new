@@ -58,3 +58,17 @@ void	free_split(char **split)
 	}
 	free(split);
 }
+
+int	parse_checker_opt(char **fields, int base, t_scene *scene)
+{
+	int	count;
+
+	count = count_fields(fields);
+	if (count != base && count != base + 1)
+		exit_error("wrong number of fields", scene);
+	if (count == base)
+		return (0);
+	if (ft_strncmp(fields[base], "checker", 8) != 0)
+		exit_error("invalid option (expected 'checker')", scene);
+	return (1);
+}

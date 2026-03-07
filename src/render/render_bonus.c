@@ -32,6 +32,7 @@ t_hit	find_closest_hit(t_object *objs, t_ray ray)
 		{
 			closest = hit;
 			closest.obj_idx = idx;
+			closest.checker = current->checker;
 		}
 		idx++;
 		current = current->next;

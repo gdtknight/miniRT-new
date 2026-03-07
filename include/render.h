@@ -30,6 +30,7 @@ typedef struct s_hit
 	t_vec3		view_dir;
 	int			hit;
 	int			obj_idx;
+	int			checker;
 }	t_hit;
 
 /* src/scene/camera.c */
