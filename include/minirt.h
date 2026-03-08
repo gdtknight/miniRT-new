@@ -17,10 +17,13 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
+# include <sys/time.h>
 # include "mlx.h"
 # include "libft.h"
 # include "vector.h"
 # include "objects.h"
+
+typedef struct timeval	t_timeval;
 
 # define WIN_W 1280
 # define WIN_H 720
@@ -29,6 +32,7 @@
 # define ROT_STEP 5.0
 # define RADIUS_STEP 0.2
 # define HEIGHT_STEP 0.5
+# define DEBOUNCE_MS 80
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -91,6 +95,8 @@ typedef struct s_scene
 	t_mode		mode;
 	int			selected_idx;
 	int			obj_count;
+	int			dirty;
+	t_timeval	last_input;
 }	t_scene;
 
 /* src/utils/ft_atof.c */
