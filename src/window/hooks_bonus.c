@@ -39,8 +39,7 @@ static void	handle_move_key(int keycode, t_scene *scene)
 	if (!is_move)
 		return ;
 	move_target(scene, keycode);
-	render_scene(scene);
-	render_hud(scene);
+	mark_dirty(scene);
 }
 
 static void	handle_rotate_key(int keycode, t_scene *scene)
@@ -52,8 +51,7 @@ static void	handle_rotate_key(int keycode, t_scene *scene)
 	if (!is_arrow || scene->mode != MODE_CAMERA)
 		return ;
 	rotate_camera(scene, keycode);
-	render_scene(scene);
-	render_hud(scene);
+	mark_dirty(scene);
 }
 
 static void	handle_resize_key(int keycode, t_scene *scene)
@@ -75,8 +73,7 @@ static void	handle_resize_key(int keycode, t_scene *scene)
 	}
 	if (!acted)
 		return ;
-	render_scene(scene);
-	render_hud(scene);
+	mark_dirty(scene);
 }
 
 int	handle_keypress_bonus(int keycode, t_scene *scene)

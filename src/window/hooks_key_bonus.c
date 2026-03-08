@@ -23,4 +23,5 @@ void	setup_hooks(t_scene *scene)
 {
 	mlx_hook(scene->win, 2, 1L << 0, handle_keypress_bonus, scene);
 	mlx_hook(scene->win, 17, 0, handle_close_bonus, scene);
+	mlx_loop_hook(scene->mlx, idle_callback, scene);
 }
