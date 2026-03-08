@@ -60,4 +60,8 @@ void	resize_height(t_scene *scene, int keycode);
 /* src/window/hud_bonus.c */
 void	render_hud(t_scene *scene);
 
+/* src/window/idle_bonus.c */
+void	mark_dirty(t_scene *scene);
+int		idle_callback(t_scene *scene);
+
 #endif
