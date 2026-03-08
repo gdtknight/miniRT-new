@@ -34,6 +34,7 @@ typedef struct s_hit
 }	t_hit;
 
 /* src/scene/camera.c */
+void		init_camera_basis(t_camera *cam);
 void		init_camera(t_camera *cam);
 
 /* src/render/ray.c */

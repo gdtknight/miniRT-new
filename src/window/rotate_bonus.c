@@ -33,26 +33,24 @@ static t_vec3	rodrigues_rotate(t_vec3 k, t_vec3 v, double angle)
 
 static void	apply_yaw(t_camera *cam, int keycode)
 {
-	t_vec3	new_dir;
 	double	angle;
 
 	angle = ROT_STEP * M_PI / 180.0;
 	if (keycode == KEY_LEFT)
 		angle = -angle;
-	new_dir = rodrigues_rotate(cam->up, cam->dir, angle);
-	cam->dir = vec3_normalize(new_dir);
+	cam->dir = vec3_normalize(rodrigues_rotate(cam->up, cam->dir, angle));
+	cam->right = vec3_normalize(rodrigues_rotate(cam->up, cam->right, angle));
 }
 
 static void	apply_pitch(t_camera *cam, int keycode)
 {
-	t_vec3	new_dir;
 	double	angle;
 
 	angle = ROT_STEP * M_PI / 180.0;
 	if (keycode == KEY_UP)
 		angle = -angle;
-	new_dir = rodrigues_rotate(cam->right, cam->dir, angle);
-	cam->dir = vec3_normalize(new_dir);
+	cam->dir = vec3_normalize(rodrigues_rotate(cam->right, cam->dir, angle));
+	cam->up = vec3_normalize(rodrigues_rotate(cam->right, cam->up, angle));
 }
 
 void	rotate_camera(t_scene *scene, int keycode)
@@ -66,5 +64,6 @@ void	rotate_camera(t_scene *scene, int keycode)
 		apply_yaw(cam, keycode);
 	if (keycode == KEY_UP || keycode == KEY_DOWN)
 		apply_pitch(cam, keycode);
+	cam->right = vec3_normalize(vec3_cross(cam->up, cam->dir));
 	init_camera(cam);
 }

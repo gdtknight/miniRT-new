@@ -36,6 +36,7 @@ void		parse_light(char **fields, t_scene *scene);
 void		dispatch_line(char *line, t_scene *scene);
 
 /* parse_objects.c */
+t_vec3		init_local_up(t_vec3 axis);
 void		add_object(t_scene *scene, t_object *obj);
 void		parse_sphere(char **fields, t_scene *scene);
 void		parse_plane(char **fields, t_scene *scene);
