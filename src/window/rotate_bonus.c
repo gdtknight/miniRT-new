@@ -6,24 +6,14 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 00:00:00 by yoshin            #+#    #+#             */
-/*   Updated: 2026/03/07 00:00:00 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/03/09 00:00:00 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus.h"
 #include "render.h"
 
-static t_vec3	yaw_rotate(t_vec3 dir, double angle)
-{
-	t_vec3	new_dir;
-
-	new_dir.x = dir.x * cos(angle) + dir.z * sin(angle);
-	new_dir.y = dir.y;
-	new_dir.z = -dir.x * sin(angle) + dir.z * cos(angle);
-	return (new_dir);
-}
-
-static t_vec3	pitch_rotate(t_vec3 k, t_vec3 v, double angle)
+static t_vec3	rodrigues_rotate(t_vec3 k, t_vec3 v, double angle)
 {
 	t_vec3	new_dir;
 	t_vec3	cross_kv;
@@ -47,9 +37,9 @@ static void	apply_yaw(t_camera *cam, int keycode)
 	double	angle;
 
 	angle = ROT_STEP * M_PI / 180.0;
-	if (keycode == KEY_RIGHT)
+	if (keycode == KEY_LEFT)
 		angle = -angle;
-	new_dir = yaw_rotate(cam->dir, angle);
+	new_dir = rodrigues_rotate(cam->up, cam->dir, angle);
 	cam->dir = vec3_normalize(new_dir);
 }
 
@@ -61,12 +51,7 @@ static void	apply_pitch(t_camera *cam, int keycode)
 	angle = ROT_STEP * M_PI / 180.0;
 	if (keycode == KEY_UP)
 		angle = -angle;
-	new_dir = pitch_rotate(cam->right, cam->dir, angle);
-	new_dir = vec3_normalize(new_dir);
-	if (new_dir.y < -0.99)
-		new_dir.y = -0.99;
-	if (new_dir.y > 0.99)
-		new_dir.y = 0.99;
+	new_dir = rodrigues_rotate(cam->right, cam->dir, angle);
 	cam->dir = vec3_normalize(new_dir);
 }
 
