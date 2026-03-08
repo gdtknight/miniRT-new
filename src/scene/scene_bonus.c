@@ -12,6 +12,32 @@
 
 #include "minirt.h"
 
+t_light	*get_light_by_idx(t_light *lights, int idx)
+{
+	int	i;
+
+	if (idx < 0)
+		return (NULL);
+	i = 0;
+	while (lights && i < idx)
+	{
+		lights = lights->next;
+		i++;
+	}
+	return (lights);
+}
+
+const char	*get_obj_type_str(t_object *obj)
+{
+	if (obj->type == OBJ_PLANE)
+		return ("plane");
+	else if (obj->type == OBJ_CYLINDER)
+		return ("cylinder");
+	else if (obj->type == OBJ_CONE)
+		return ("cone");
+	return ("sphere");
+}
+
 void	free_lights(t_light *lights)
 {
 	t_light		*tmp;

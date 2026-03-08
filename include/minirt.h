@@ -95,6 +95,8 @@ typedef struct s_scene
 	t_mode		mode;
 	int			selected_idx;
 	int			obj_count;
+	int			selected_light_idx;
+	int			light_count;
 	int			dirty;
 	t_timeval	last_input;
 }	t_scene;
@@ -111,6 +113,9 @@ void		free_objects(t_object *objs);
 
 /* src/scene/scene_utils.c */
 t_object	*get_object_by_idx(t_object *objs, int idx);
+
+/* src/scene/scene_bonus.c */
+t_light		*get_light_by_idx(t_light *lights, int idx);
 
 /* src/scene/scene_cleanup.c | src/scene/scene_bonus.c */
 void		free_scene(t_scene *scene);

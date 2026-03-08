@@ -87,6 +87,7 @@ BONUS_SRC   = src/render/specular_bonus.c \
               src/window/hooks_key_bonus.c \
               src/window/move_bonus.c \
               src/window/rotate_bonus.c \
+              src/window/obj_rotate_bonus.c \
               src/window/transform_bonus.c \
               src/window/hud_bonus.c \
               src/window/idle_bonus.c
