@@ -37,5 +37,6 @@ void	parse_cone(char **fields, t_scene *scene)
 	obj->data.cone.cos_theta = height / sqrt(height * height
 			+ radius * radius);
 	obj->data.cone.color = parse_color(fields[5], scene);
+	obj->local_up = init_local_up(obj->data.cone.axis);
 	add_object(scene, obj);
 }
