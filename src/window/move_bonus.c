@@ -61,6 +61,7 @@ void	move_target(t_scene *scene, int keycode)
 {
 	t_object	*obj;
 	t_point3	*pos;
+	t_light		*light;
 
 	if (scene->mode == MODE_CAMERA)
 	{
@@ -69,7 +70,10 @@ void	move_target(t_scene *scene, int keycode)
 	}
 	if (scene->mode == MODE_LIGHT)
 	{
-		move_pos(&scene->light.pos, keycode);
+		light = get_light_by_idx(scene->lights,
+				scene->selected_light_idx);
+		if (light)
+			move_pos(&light->pos, keycode);
 		return ;
 	}
 	obj = get_object_by_idx(scene->objects, scene->selected_idx);

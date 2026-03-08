@@ -40,6 +40,9 @@
 # define HUD_W      280
 # define HUD_H      220
 
+/* src/scene/scene_bonus.c */
+const char	*get_obj_type_str(t_object *obj);
+
 /* src/window/hooks_bonus.c */
 int		handle_keypress_bonus(int keycode, t_scene *scene);
 
@@ -52,6 +55,9 @@ void	move_target(t_scene *scene, int keycode);
 
 /* src/window/rotate_bonus.c */
 void	rotate_camera(t_scene *scene, int keycode);
+
+/* src/window/obj_rotate_bonus.c */
+void	rotate_object(t_scene *scene, int keycode);
 
 /* src/window/transform_bonus.c */
 void	resize_radius(t_scene *scene, int keycode);

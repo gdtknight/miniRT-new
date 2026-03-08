@@ -71,25 +71,26 @@ static void	draw_hud_keys(t_scene *scene)
 static void	draw_hud_status(t_scene *scene)
 {
 	t_object	*obj;
-	const char	*type_str;
 	char		*idx;
 	char		buf[64];
 
+	if (scene->mode == MODE_LIGHT)
+	{
+		idx = ft_itoa(scene->selected_light_idx);
+		ft_strlcpy(buf, "Light #", 64);
+		ft_strlcat(buf, idx, 64);
+		free(idx);
+		mlx_string_put(scene->mlx, scene->win, 10, 200, 0xFFFFFF, buf);
+		return ;
+	}
 	if (scene->mode != MODE_OBJECT)
 		return ;
 	obj = get_object_by_idx(scene->objects, scene->selected_idx);
 	if (!obj)
 		return ;
-	type_str = "sphere";
-	if (obj->type == OBJ_PLANE)
-		type_str = "plane";
-	else if (obj->type == OBJ_CYLINDER)
-		type_str = "cylinder";
-	else if (obj->type == OBJ_CONE)
-		type_str = "cone";
 	idx = ft_itoa(scene->selected_idx + 1);
 	ft_strlcpy(buf, "Selected: ", 64);
-	ft_strlcat(buf, type_str, 64);
+	ft_strlcat(buf, get_obj_type_str(obj), 64);
 	ft_strlcat(buf, " #", 64);
 	ft_strlcat(buf, idx, 64);
 	free(idx);

@@ -27,6 +27,12 @@ static void	handle_mode_key(int keycode, t_scene *scene)
 			scene->selected_idx = (scene->selected_idx + 1)
 				% scene->obj_count;
 	}
+	else if (keycode == KEY_TAB && scene->mode == MODE_LIGHT)
+	{
+		if (scene->light_count > 0)
+			scene->selected_light_idx = (scene->selected_light_idx + 1)
+				% scene->light_count;
+	}
 }
 
 static void	handle_move_key(int keycode, t_scene *scene)
@@ -48,9 +54,14 @@ static void	handle_rotate_key(int keycode, t_scene *scene)
 
 	is_arrow = (keycode == KEY_LEFT || keycode == KEY_RIGHT
 			|| keycode == KEY_UP || keycode == KEY_DOWN);
-	if (!is_arrow || scene->mode != MODE_CAMERA)
+	if (!is_arrow)
 		return ;
-	rotate_camera(scene, keycode);
+	if (scene->mode == MODE_CAMERA)
+		rotate_camera(scene, keycode);
+	else if (scene->mode == MODE_OBJECT)
+		rotate_object(scene, keycode);
+	else
+		return ;
 	mark_dirty(scene);
 }
 
