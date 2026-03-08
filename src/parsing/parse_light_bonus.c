@@ -43,6 +43,7 @@ void	parse_light(char **fields, t_scene *scene)
 	light->color = parse_color(fields[3], scene);
 	light->next = NULL;
 	add_light(scene, light);
+	scene->light_count++;
 	scene->has_light = 1;
 }
 

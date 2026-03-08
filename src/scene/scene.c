@@ -18,6 +18,8 @@ void	init_scene(t_scene *scene)
 	scene->mode = MODE_CAMERA;
 	scene->selected_idx = 0;
 	scene->obj_count = 0;
+	scene->selected_light_idx = 0;
+	scene->light_count = 0;
 }
 
 t_object	*get_object_by_idx(t_object *objs, int idx)
