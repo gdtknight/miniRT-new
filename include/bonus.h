@@ -38,7 +38,7 @@
 
 /* HUD dimensions */
 # define HUD_W      280
-# define HUD_H      220
+# define HUD_H      250
 
 /* src/scene/scene_bonus.c */
 const char	*get_obj_type_str(t_object *obj);

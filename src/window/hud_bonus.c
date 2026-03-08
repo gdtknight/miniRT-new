@@ -37,14 +37,14 @@ static void	draw_hud_mode(t_scene *scene)
 
 	c = 0xFFFFFF;
 	if (scene->mode == MODE_CAMERA)
-		mlx_string_put(scene->mlx, scene->win, 10, 40, c,
-			"Mode:[CAMERA] light obj");
+		mlx_string_put(scene->mlx, scene->win, 10, 50, c,
+			"Mode:[CAMERA] light  obj");
 	else if (scene->mode == MODE_LIGHT)
-		mlx_string_put(scene->mlx, scene->win, 10, 40, c,
-			"Mode: camera [LIGHT] obj");
+		mlx_string_put(scene->mlx, scene->win, 10, 50, c,
+			"Mode: camera [LIGHT]  obj");
 	else
-		mlx_string_put(scene->mlx, scene->win, 10, 40, c,
-			"Mode: camera light [OBJ]");
+		mlx_string_put(scene->mlx, scene->win, 10, 50, c,
+			"Mode: camera  light [OBJ]");
 }
 
 static void	draw_hud_keys(t_scene *scene)
@@ -54,18 +54,20 @@ static void	draw_hud_keys(t_scene *scene)
 	c = 0xFFFFFF;
 	mlx_string_put(scene->mlx, scene->win, 10, 20, c,
 		"=== miniRT Controls ===");
-	mlx_string_put(scene->mlx, scene->win, 10, 60, c,
-		"[1]Camera [2]Light [3]Obj");
 	mlx_string_put(scene->mlx, scene->win, 10, 80, c,
-		"[WASD]Move [RF]Up/Down");
+		"Mode       - 1 / 2 / 3");
 	mlx_string_put(scene->mlx, scene->win, 10, 100, c,
-		"[<->]Yaw [Up/Dn]Pitch");
+		"Move       - W A S D");
 	mlx_string_put(scene->mlx, scene->win, 10, 120, c,
-		"[Tab]Select Object");
+		"Up/Down    - R / F");
 	mlx_string_put(scene->mlx, scene->win, 10, 140, c,
-		"[[/]]Radius [+-]Height");
+		"Rotate     - < > ^ v");
 	mlx_string_put(scene->mlx, scene->win, 10, 160, c,
-		"-----------------------");
+		"Select     - Tab");
+	mlx_string_put(scene->mlx, scene->win, 10, 180, c,
+		"Radius     - [ / ]");
+	mlx_string_put(scene->mlx, scene->win, 10, 200, c,
+		"Height     - + / -");
 }
 
 static void	draw_hud_status(t_scene *scene)
@@ -80,7 +82,7 @@ static void	draw_hud_status(t_scene *scene)
 		ft_strlcpy(buf, "Light #", 64);
 		ft_strlcat(buf, idx, 64);
 		free(idx);
-		mlx_string_put(scene->mlx, scene->win, 10, 200, 0xFFFFFF, buf);
+		mlx_string_put(scene->mlx, scene->win, 10, 230, 0xFFFFFF, buf);
 		return ;
 	}
 	if (scene->mode != MODE_OBJECT)
@@ -94,7 +96,7 @@ static void	draw_hud_status(t_scene *scene)
 	ft_strlcat(buf, " #", 64);
 	ft_strlcat(buf, idx, 64);
 	free(idx);
-	mlx_string_put(scene->mlx, scene->win, 10, 200, 0xFFFFFF, buf);
+	mlx_string_put(scene->mlx, scene->win, 10, 230, 0xFFFFFF, buf);
 }
 
 void	render_hud(t_scene *scene)
