@@ -42,35 +42,25 @@ static t_vec3	*get_obj_axis(t_object *obj)
 	return (NULL);
 }
 
-static void	apply_obj_rotate(t_vec3 *axis, int keycode)
+static void	apply_obj_yaw(t_vec3 *axis, t_vec3 *local_up, double angle)
 {
-	t_vec3	world_up;
-	t_vec3	right;
-	double	angle;
+	*axis = vec3_normalize(rodrigues(*local_up, *axis, angle));
+}
 
-	angle = ROT_STEP * M_PI / 180.0;
-	world_up = vec3_new(0.0, 1.0, 0.0);
-	if (fabs(vec3_dot(*axis, world_up)) > 0.99)
-		world_up = vec3_new(0.0, 0.0, 1.0);
-	right = vec3_normalize(vec3_cross(world_up, *axis));
-	if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
-	{
-		if (keycode == KEY_RIGHT)
-			angle = -angle;
-		*axis = vec3_normalize(rodrigues(world_up, *axis, angle));
-	}
-	else
-	{
-		if (keycode == KEY_UP)
-			angle = -angle;
-		*axis = vec3_normalize(rodrigues(right, *axis, angle));
-	}
+static void	apply_obj_pitch(t_vec3 *axis, t_vec3 *local_up, double angle)
+{
+	t_vec3	right;
+
+	right = vec3_normalize(vec3_cross(*local_up, *axis));
+	*axis = vec3_normalize(rodrigues(right, *axis, angle));
+	*local_up = vec3_normalize(rodrigues(right, *local_up, angle));
 }
 
 void	rotate_object(t_scene *scene, int keycode)
 {
 	t_object	*obj;
 	t_vec3		*axis;
+	double		angle;
 
 	obj = get_object_by_idx(scene->objects, scene->selected_idx);
 	if (!obj)
@@ -78,5 +68,11 @@ void	rotate_object(t_scene *scene, int keycode)
 	axis = get_obj_axis(obj);
 	if (!axis)
 		return ;
-	apply_obj_rotate(axis, keycode);
+	angle = ROT_STEP * M_PI / 180.0;
+	if (keycode == KEY_LEFT || keycode == KEY_UP)
+		angle = -angle;
+	if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
+		apply_obj_yaw(axis, &obj->local_up, angle);
+	else
+		apply_obj_pitch(axis, &obj->local_up, angle);
 }

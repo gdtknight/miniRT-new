@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 	}
 	init_scene(&scene);
 	parse_file(argv[1], &scene);
+	init_camera_basis(&scene.camera);
 	init_window(&scene);
 	render_scene(&scene);
 	setup_hooks(&scene);
