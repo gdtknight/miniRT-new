@@ -16,9 +16,10 @@ A minimal ray tracer built in C as part of the 42 School curriculum.
 - Multiple spotlights support
 - Cone primitive rendering
 - Interactive camera, light, and object movement
-- Camera rotation controls
+- Camera rotation with Rodrigues formula (gimbal-lock-free)
 - Object resize controls
 - Object selection with highlight tint
+- Multi-light selection with TAB cycling and HUD display
 - HUD overlay for interactive mode
 - Debounce rendering (80ms idle callback) for smoother interactive mode
 
@@ -74,7 +75,7 @@ The bonus build supports interactive scene manipulation. Select objects and the 
 
 | Key | Action |
 |-----|--------|
-| `Tab` | Cycle selection (camera → light → objects) |
+| `Tab` | Cycle selection (camera → lights → objects) |
 | `W` / `S` | Move selected object/camera forward / backward |
 | `A` / `D` | Move selected object/camera left / right |
 | `Q` / `E` | Move selected object/camera up / down |
@@ -89,6 +90,7 @@ A HUD overlay displays the current selection and mode.
 
 | Tag | Description |
 |-----|-------------|
+| v1.4 | Camera rotation rewritten with Rodrigues formula (gimbal-lock-free) and key direction fix; multi-light selection added with TAB cycling and HUD display. |
 | v1.3 | Per-object checkerboard flag wired into parsing and rendering; debounce rendering (80ms idle callback) added for smoother bonus mode interaction; `t_timeval` typedef fix in window module. |
 | v1.2 | Interactive controls — camera/light/object movement, camera rotation, object resize, HUD overlay, and selected object highlight tint added to bonus mode. |
 | v1.1 | Refactor — all `#ifdef BONUS` guards removed from shared sources. Bonus functionality lives exclusively in `_bonus.c`/`_bonus.h` files, eliminating conditional compilation from the mandatory code path. |
