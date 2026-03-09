@@ -20,6 +20,7 @@ A minimal ray tracer built in C as part of the 42 School curriculum.
 - Object resize controls
 - Object selection with highlight tint
 - HUD overlay for interactive mode
+- Debounce rendering (80ms idle callback) for smoother interactive mode
 
 ## Build
 
@@ -88,6 +89,7 @@ A HUD overlay displays the current selection and mode.
 
 | Tag | Description |
 |-----|-------------|
+| v1.3 | Per-object checkerboard flag wired into parsing and rendering; debounce rendering (80ms idle callback) added for smoother bonus mode interaction; `t_timeval` typedef fix in window module. |
 | v1.2 | Interactive controls — camera/light/object movement, camera rotation, object resize, HUD overlay, and selected object highlight tint added to bonus mode. |
 | v1.1 | Refactor — all `#ifdef BONUS` guards removed from shared sources. Bonus functionality lives exclusively in `_bonus.c`/`_bonus.h` files, eliminating conditional compilation from the mandatory code path. |
 | v1.0 | Initial release — mandatory ray tracer (sphere, plane, cylinder, ambient+diffuse lighting, hard shadows) plus bonus features (specular/Phong, checkerboard, multi-light, cone). Memory leaks plugged and 42 Norm violations fixed. |
