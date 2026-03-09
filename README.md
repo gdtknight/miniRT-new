@@ -15,6 +15,11 @@ A minimal ray tracer built in C as part of the 42 School curriculum.
 - Checkerboard texture pattern on objects
 - Multiple spotlights support
 - Cone primitive rendering
+- Interactive camera, light, and object movement
+- Camera rotation controls
+- Object resize controls
+- Object selection with highlight tint
+- HUD overlay for interactive mode
 
 ## Build
 
@@ -62,9 +67,27 @@ cy  5,0,15       0,1,0       3  6  50,100,200
 
 Misconfigured files print `Error\n` with an explicit message and exit cleanly.
 
+## Controls (Bonus)
+
+The bonus build supports interactive scene manipulation. Select objects and the camera/light with the keyboard.
+
+| Key | Action |
+|-----|--------|
+| `Tab` | Cycle selection (camera → light → objects) |
+| `W` / `S` | Move selected object/camera forward / backward |
+| `A` / `D` | Move selected object/camera left / right |
+| `Q` / `E` | Move selected object/camera up / down |
+| `↑` / `↓` | Rotate camera pitch up / down |
+| `←` / `→` | Rotate camera yaw left / right |
+| `+` / `-` | Resize selected object (diameter / height) |
+| `ESC` | Close window and exit |
+
+A HUD overlay displays the current selection and mode.
+
 ## Release History
 
 | Tag | Description |
 |-----|-------------|
+| v1.2 | Interactive controls — camera/light/object movement, camera rotation, object resize, HUD overlay, and selected object highlight tint added to bonus mode. |
 | v1.1 | Refactor — all `#ifdef BONUS` guards removed from shared sources. Bonus functionality lives exclusively in `_bonus.c`/`_bonus.h` files, eliminating conditional compilation from the mandatory code path. |
 | v1.0 | Initial release — mandatory ray tracer (sphere, plane, cylinder, ambient+diffuse lighting, hard shadows) plus bonus features (specular/Phong, checkerboard, multi-light, cone). Memory leaks plugged and 42 Norm violations fixed. |
