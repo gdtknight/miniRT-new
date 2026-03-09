@@ -16,11 +16,12 @@ A minimal ray tracer built in C as part of the 42 School curriculum.
 - Multiple spotlights support
 - Cone primitive rendering
 - Interactive camera, light, and object movement
-- Camera rotation with Rodrigues formula (gimbal-lock-free)
+- 360° continuous local coordinate rotation for camera and objects (gimbal-lock-free)
+- Object rotation support (pitch/yaw applied in local frame)
 - Object resize controls
 - Object selection with highlight tint
 - Multi-light selection with TAB cycling and HUD display
-- HUD overlay for interactive mode
+- HUD overlay with action-key format and Move/Rotate/Resize sections
 - Debounce rendering (80ms idle callback) for smoother interactive mode
 
 ## Build
@@ -79,17 +80,18 @@ The bonus build supports interactive scene manipulation. Select objects and the 
 | `W` / `S` | Move selected object/camera forward / backward |
 | `A` / `D` | Move selected object/camera left / right |
 | `Q` / `E` | Move selected object/camera up / down |
-| `↑` / `↓` | Rotate camera pitch up / down |
-| `←` / `→` | Rotate camera yaw left / right |
+| `↑` / `↓` | Rotate selected object/camera pitch up / down |
+| `←` / `→` | Rotate selected object/camera yaw left / right |
 | `+` / `-` | Resize selected object (diameter / height) |
 | `ESC` | Close window and exit |
 
-A HUD overlay displays the current selection and mode.
+The HUD overlay displays the current selection and lists available actions in action-key format, including Move, Rotate, and Resize sections.
 
 ## Release History
 
 | Tag | Description |
 |-----|-------------|
+| v1.5 | HUD redesigned with action-key format and Rotate section; object rotation support added; 360° continuous local coordinate rotation for camera and objects (gimbal-lock-free). |
 | v1.4 | Camera rotation rewritten with Rodrigues formula (gimbal-lock-free) and key direction fix; multi-light selection added with TAB cycling and HUD display. |
 | v1.3 | Per-object checkerboard flag wired into parsing and rendering; debounce rendering (80ms idle callback) added for smoother bonus mode interaction; `t_timeval` typedef fix in window module. |
 | v1.2 | Interactive controls — camera/light/object movement, camera rotation, object resize, HUD overlay, and selected object highlight tint added to bonus mode. |
