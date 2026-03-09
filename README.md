@@ -66,4 +66,5 @@ Misconfigured files print `Error\n` with an explicit message and exit cleanly.
 
 | Tag | Description |
 |-----|-------------|
+| v1.1 | Refactor — all `#ifdef BONUS` guards removed from shared sources. Bonus functionality lives exclusively in `_bonus.c`/`_bonus.h` files, eliminating conditional compilation from the mandatory code path. |
 | v1.0 | Initial release — mandatory ray tracer (sphere, plane, cylinder, ambient+diffuse lighting, hard shadows) plus bonus features (specular/Phong, checkerboard, multi-light, cone). Memory leaks plugged and 42 Norm violations fixed. |
